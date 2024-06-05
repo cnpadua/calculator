@@ -18,5 +18,22 @@ function operate(a,b,operation){
 
 }
 
+function clear(){
+    /* 
+        Clears text content in display
+    */
+   console.log("clear");
+   let display = document.querySelector(".display");
+   display.textContent = "";
+}
 
-let op1, op2, operator;
+
+function main(){
+    
+    let op1, op2, operator;
+    let clear_button = document.querySelector(".clear");
+    clear_button.addEventListener("click", clear);
+
+}
+
+main();

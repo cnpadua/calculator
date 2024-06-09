@@ -25,8 +25,25 @@ function divide(a,b){
     return a/b;
 }
 
-function operate(a,b,operation){
+// EXECUTING OPERATION
+function isValidOps(){
+    let result = op1 != undefined && op2 != undefined && operator != undefined;
+    console.log("isValidOPs", result);
+    return result;
+}
 
+function operate(a,b,operation){
+    /*
+        Execute operation, update operands, and operator vars
+        Display result
+    */
+
+    let result = operation(a,b);
+    clearDisplay();
+    addToDisplay(result);
+    op1 = result;
+    op2 = undefined;
+    operator = undefined;
 }
 
 function allClear(){
@@ -38,6 +55,7 @@ function allClear(){
     op2 = undefined;
     operator = undefined;
     clearDisplay();
+    addToDisplay(0);
     logOps();
 }
 
@@ -55,7 +73,7 @@ function addToDisplay(text){
         Adds text of button to display
     */
     let display = document.querySelector(".display");
-    display.textContent = getDisplayText() + text;
+    display.textContent = getDisplayText() + String(text);
     
 }
 
@@ -83,10 +101,7 @@ function assignOperand(number){
         // assign number to op2
         op2 = number;
         input_second = false;
-    } else { // op1 and op2 defined 
-        // operate
-        // do opearation, get result, clear op2, assign op1
-    }
+    } 
     logOps();
 }
 
@@ -127,6 +142,10 @@ function main(){
                 clearDisplay();
             }
 
+            if (getDisplayText() == "0"){
+                clearDisplay();
+            }
+
             addToDisplay(event.target.innerText);
         });
     });
@@ -139,6 +158,16 @@ function main(){
             assignOperator(event.target.innerText);
             logOps();
         })
+    });
+
+    // Equals event listeners
+
+    let equals_button = document.querySelector(".equals")
+    equals_button.addEventListener("click", () => {
+        assignOperand(Number(getDisplayText()));
+        if (isValidOps()){
+            operate(op1, op2, operator);
+        }
     });
 }
 

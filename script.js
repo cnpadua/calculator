@@ -1,5 +1,7 @@
 // GLOBAL
-let op1, op2, operator = null;
+let op1, op2, operator = undefined;
+let input_second = false;
+
 
 // DEBUGGING
 function logOps(){
@@ -27,13 +29,16 @@ function operate(a,b,operation){
 
 }
 
-function clear(){
-    /* 
-        Clears text content in display
+function allClear(){
+    /*
+        Resets operands and operator values to undefined
+        AND clears display
     */
-   console.log("clear");
-   let display = document.querySelector(".display");
-   display.textContent = "";
+    op1 = undefined;
+    op2 = undefined;
+    operator = undefined;
+    clearDisplay();
+    logOps();
 }
 
 // DISPLAY
@@ -49,32 +54,58 @@ function addToDisplay(text){
     /* 
         Adds text of button to display
     */
-    console.log("addToDisplay()");
     let display = document.querySelector(".display");
     display.textContent = getDisplayText() + text;
     
 }
 
-// OPERANDS
-function assignOperand(number /*, oper*/){
+function clearDisplay   (){
     /* 
-
+        Clears text content in display
     */
-    // Assigning operator
-    // if (oper == undefined){
-    //     operator = oper;
-    // }
+   console.log("clearDisplay");
+   let display = document.querySelector(".display");
+   display.textContent = "";
+}
+
+// OPERANDS
+function assignOperand(number){
+    /* 
+        Assigns number to op1, op2, or neither
+    */
 
     // Assigning operands
     if (op1 == undefined){
         // assign number to op1
         op1 = number;
+        input_second = true;
     } else if (op2 == undefined) {
         // assign number to op2
         op2 = number;
+        input_second = false;
     } else { // op1 and op2 defined 
         // operate
-        logOps();
+        // do opearation, get result, clear op2, assign op1
+    }
+    logOps();
+}
+
+
+// OPERATOR
+
+function assignOperator(oper){
+    /*
+        Assign operator function to variable depending on oper str
+    */
+
+    if (oper == "+"){
+        operator = add;
+    } else if (oper == "-") {
+        operator = subtract;
+    } else if (oper == "*") {
+        operator = multiply;
+    } else if (oper == "/") {
+        operator = divide;
     }
 }
 
@@ -84,43 +115,31 @@ function main(){
     
     // Clear button event listener
     let clear_button = document.querySelector(".clear");
-    clear_button.addEventListener("click", clear);
+    clear_button.addEventListener("click", allClear);
 
     // Number input event listeners (updates display)
     let number_buttons = document.querySelectorAll(".number");
-    [...number_buttons].map((btn_element) => 
+    [...number_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event)=>{
+
+            // If inputting second operand, clear display first
+            if (input_second){
+                clearDisplay();
+            }
+
             addToDisplay(event.target.innerText);
-    }));
+        });
+    });
 
     // Operator event listeners
-    let opearator_buttons = document.querySelectorAll(".operator");
-    [...opearator_buttons].map((btn_element) => {
+    let operator_buttons = document.querySelectorAll(".operator");
+    [...operator_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event) => {
             assignOperand(Number(getDisplayText()));
-            clear();
+            assignOperator(event.target.innerText);
             logOps();
         })
     });
-    
-    /*
-        Rubber Ducking
-        --------------
-
-        - AC resets
-        - When OPERATOR is FIRST pressed, save number in display
-        - Input second number
-        - Assigning operands
-            if op1 null
-                assign op1
-            else 
-                assign op2
-                calculate result
-                display result
-        
-        
-    
-    */
 }
 
 main();

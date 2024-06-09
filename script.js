@@ -36,6 +36,7 @@ function clear(){
    display.textContent = "";
 }
 
+// DISPLAY
 function getDisplayText(){
     /*
         Returns text in calculator display
@@ -54,10 +55,27 @@ function addToDisplay(text){
     
 }
 
-function assignOperand(){
+// OPERANDS
+function assignOperand(number /*, oper*/){
     /* 
 
     */
+    // Assigning operator
+    // if (oper == undefined){
+    //     operator = oper;
+    // }
+
+    // Assigning operands
+    if (op1 == undefined){
+        // assign number to op1
+        op1 = number;
+    } else if (op2 == undefined) {
+        // assign number to op2
+        op2 = number;
+    } else { // op1 and op2 defined 
+        // operate
+        logOps();
+    }
 }
 
 
@@ -79,8 +97,8 @@ function main(){
     let opearator_buttons = document.querySelectorAll(".operator");
     [...opearator_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event) => {
+            assignOperand(Number(getDisplayText()));
             clear();
-            assignOperand(getDisplayText());
             logOps();
         })
     });

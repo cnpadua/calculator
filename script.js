@@ -37,21 +37,29 @@ function isValidOps(){
     return result;
 }
 
+function NO(){
+    clearDisplay();
+    addToDisplay("NO");
+}
+
 function operate(a,b,operation){
     /*
         Execute operation, update operands, and operator vars
         Display result
     */
+    if (op2 == 0 && operation == divide){
+        NO();
+    } else {
+        let result = operation(a,b);
+        clearDisplay();
+        addToDisplay(result);
+        op1 = result;
+        op2 = undefined;
+        // operator = undefined;
+        input_second = true;
 
-    let result = operation(a,b);
-    clearDisplay();
-    addToDisplay(result);
-    op1 = result;
-    op2 = undefined;
-    // operator = undefined;
-    input_second = true;
-
-    logOps();
+        logOps();
+    }
 }
 
 function allClear(){

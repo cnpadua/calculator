@@ -1,7 +1,6 @@
 // GLOBAL
 let op1, op2, operator = undefined;
 let input_second = false;
-let has_decimal = false;
 
 // DEBUGGING
 function logOps(){
@@ -26,7 +25,7 @@ function divide(a,b){
 }
 
 function point() {
-    if (!has_decimal) {
+    if (!getDisplayText().includes(".")){
         addToDisplay(".");
     }
 }
@@ -63,6 +62,7 @@ function allClear(){
     op1 = undefined;
     op2 = undefined;
     operator = undefined;
+    input_second = false;
     clearDisplay();
     addToDisplay(0);
     logOps();

@@ -157,17 +157,20 @@ function main(){
     [...number_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event)=>{
 
-            // If inputting second operand, clear display first
-            if (input_second){
-                clearDisplay();
-                input_second = false;
-            }
+            // If length of display text == 16 don't display
+            if (getDisplayText().length != 16){
+                // If inputting second operand, clear display first
+                if (input_second){
+                    clearDisplay();
+                    input_second = false;
+                }
 
-            if (getDisplayText() == "0"){
-                clearDisplay();
-            }
+                if (getDisplayText() == "0"){
+                    clearDisplay();
+                }
 
-            addToDisplay(event.target.innerText);
+                addToDisplay(event.target.innerText);
+            }       
         });
     });
 

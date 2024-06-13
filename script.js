@@ -48,7 +48,7 @@ function operate(a,b,operation){
     addToDisplay(result);
     op1 = result;
     op2 = undefined;
-    operator = undefined;
+    // operator = undefined;
     input_second = true;
 
     logOps();
@@ -100,7 +100,6 @@ function assignOperand(number){
     /* 
         Assigns number to op1, op2, or neither
     */
-
     // Assigning operands
     if (op1 == undefined){
         // assign number to op1
@@ -168,12 +167,6 @@ function main(){
     let operator_buttons = document.querySelectorAll(".operator");
     [...operator_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event) => {
-
-            /* 
-                PROBLEM HERE - FOR SECOND OPERATION
-                Second operand assigned when we don't want to yet
-            */
-            
             if (op1 == undefined){
                 assignOperand(Number(getDisplayText()));    
             }
@@ -183,13 +176,17 @@ function main(){
     });
 
     // Equals event listeners
-
     let equals_button = document.querySelector(".equals")
     equals_button.addEventListener("click", () => {
-        assignOperand(Number(getDisplayText()));
-        if (isValidOps()){
-            operate(op1, op2, operator);
+        if (op1 == undefined && operator == undefined){
+            //
+        } else {
+            assignOperand(Number(getDisplayText()));
+            if (isValidOps()){    
+                operate(op1, op2, operator);
+            }
         }
+        
     });
 }
 

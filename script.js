@@ -174,7 +174,9 @@ function main(){
                 Second operand assigned when we don't want to yet
             */
             
-            assignOperand(Number(getDisplayText()));    
+            if (op1 == undefined){
+                assignOperand(Number(getDisplayText()));    
+            }
             assignOperator(event.target.innerText);
             logOps();
         })

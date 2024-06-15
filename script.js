@@ -291,6 +291,51 @@ function main(){
         }
         
     });
+
+    // Button press CSS
+
+        // operators/orange
+    [...operator_buttons].map((btn_element) => {
+        btn_element.addEventListener("mousedown", () => {
+            btn_element.style["background-color"] = "rgb(204, 138, 16)";
+        });    
+
+        btn_element.addEventListener("mouseup", () => {
+            btn_element.style["background-color"] = "rgb(248, 168, 20)"
+        });
+    });
+
+        // number,point/dark grey
+    [...number_buttons].concat(point_button).map((btn_element) => {
+        btn_element.addEventListener("mousedown", () => {
+            console.log("CRYING SCREAMING VOMITTING");
+            btn_element.style["background-color"] = "rgb(109, 109, 109)";
+        });
+
+        btn_element.addEventListener("mouseup", () => {
+            console.log("CRYING SCREAMING VOMITTING");
+            btn_element.style["background-color"] = "rgb(141, 141, 141)";
+        });
+    })
+
+    
+
+        // AC,format/lightgrey
+    let format_buttons = document.querySelectorAll(".format");
+    [...format_buttons].map((btn_element) => {
+        btn_element.addEventListener("mousedown", () => {
+            console.log("CRYING SCREAMING VOMITTING");
+            btn_element.style["background-color"] = "rgb(136, 136, 136)";
+        });    
+    
+        btn_element.addEventListener("mouseup", () => {
+            console.log("CRYING SCREAMING VOMITTING");
+            btn_element.style["background-color"] = "rgb(192, 192, 192)";
+        });
+    });
+
+
+
 }
 
 main();

@@ -4,7 +4,7 @@ let input_second = false;
 
 // DEBUGGING
 function logOps(){
-    console.log(op1, op2, operator,input_second);
+    console.log(op1, op2, operator, `inputSecond:${input_second}`);
 }
 
 // CALCUALTOR OPERATORS
@@ -33,7 +33,8 @@ function point() {
 // EXECUTING OPERATION
 function isValidOps(){
     let result = op1 != undefined && op2 != undefined && operator != undefined;
-    console.log("isValidOPs", result);
+    console.log("= isValidOps =");
+    logOps();
     return result;
 }
 
@@ -47,6 +48,8 @@ function operate(a,b,operation){
         Execute operation, update operands, and operator vars
         Display result
     */
+    console.log("= Before operation =");
+    logOps();
     if (op2 == 0 && operation == divide){
         NO();
     } else {
@@ -57,9 +60,10 @@ function operate(a,b,operation){
         op2 = undefined;
         // operator = undefined;
         input_second = true;
-
-        logOps();
     }
+
+    console.log("= After operation =");
+    logOps();
 }
 
 function allClear(){
@@ -73,6 +77,8 @@ function allClear(){
     input_second = false;
     clearDisplay();
     addToDisplay(0);
+
+    console.log("= All Clear =");
     logOps();
 }
 
@@ -108,6 +114,7 @@ function assignOperand(number){
     /* 
         Assigns number to op1, op2, or neither
     */
+
     // Assigning operands
     if (op1 == undefined){
         // assign number to op1
@@ -118,6 +125,8 @@ function assignOperand(number){
         op2 = number;
         input_second = false;
     } 
+
+    console.log("= Assign Operand =");
     logOps();
 }
 
@@ -138,6 +147,9 @@ function assignOperator(oper){
     } else if (oper == "/") {
         operator = divide;
     }
+
+    console.log("= assignOperator =");
+    logOps();
 }
 
 
@@ -163,6 +175,7 @@ function main(){
                 if (input_second){
                     clearDisplay();
                     input_second = false;
+                    // logOps();
                 }
 
                 if (getDisplayText() == "0"){
@@ -170,7 +183,9 @@ function main(){
                 }
 
                 addToDisplay(event.target.innerText);
-            }       
+                // logOps();
+            }
+
         });
     });
 
@@ -178,11 +193,24 @@ function main(){
     let operator_buttons = document.querySelectorAll(".operator");
     [...operator_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event) => {
+            
             if (op1 == undefined){
-                assignOperand(Number(getDisplayText()));    
+                assignOperand(Number(getDisplayText()));   
+                // logOps(); 
+            } else if (op1 != undefined && operator != undefined){
+                assignOperand(Number(getDisplayText()));
+                // logOps();
             }
+
+            // Check for valid ops before assigning new operator
+            if (isValidOps()){
+                operate(op1, op2, operator);
+                // logOps();
+            }
+
             assignOperator(event.target.innerText);
-            logOps();
+
+            // logOps();
         })
     });
 

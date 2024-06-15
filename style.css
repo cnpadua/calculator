@@ -37,6 +37,8 @@
 }
 
 .display {
+    font-size: 20px;
+
     background-color: black;
     border: 2px solid gray;
     border-radius: 5px;

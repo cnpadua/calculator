@@ -43,6 +43,14 @@ function NO(){
     addToDisplay("NO");
 }
 
+function simplifyAnswer(answer){
+    /*
+        Simplifies floating point numbers to be max length 16
+    */
+
+    return Number(answer).toPrecision(16);
+}
+
 function operate(a,b,operation){
     /*
         Execute operation, update operands, and operator vars
@@ -53,7 +61,7 @@ function operate(a,b,operation){
     if (op2 == 0 && operation == divide){
         NO();
     } else {
-        let result = operation(a,b);
+        let result = simplifyAnswer(operation(a,b));
         clearDisplay();
         addToDisplay(result);
         op1 = result;
@@ -169,14 +177,16 @@ function main(){
     [...number_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event)=>{
 
+            if (input_second){
+                clearDisplay();
+                input_second = false;
+                // logOps();
+            }
+
             // If length of display text == 16 don't display
             if (getDisplayText().length != 16){
                 // If inputting second operand, clear display first
-                if (input_second){
-                    clearDisplay();
-                    input_second = false;
-                    // logOps();
-                }
+                
 
                 if (getDisplayText() == "0"){
                     clearDisplay();

@@ -1,3 +1,13 @@
+/*
+    TODO
+    - [x] Reformat laylout
+    - [] +/- button
+    - [] % button
+    - [] CSS Button press effect
+    - [] Keyboard Support
+    - [] Del button?
+*/
+
 // GLOBAL
 let op1, op2, operator = undefined;
 let input_second = false;

@@ -1,11 +1,9 @@
 /*
     TODO
     - [x] Reformat laylout
-    - [] +/- button
-    - [] % button
-    - [] CSS Button press effect
-    - [] Keyboard Support
-    - [] Del button?
+    - [x] +/- button
+    - [x] % button
+    - [x] CSS Button press effect
 */
 
 // GLOBAL
@@ -19,7 +17,7 @@ function logOps(){
 
 // CALCUALTOR OPERATORS
 function add(a,b) {
-    return a+b;
+    return Number(a)+Number(b);
 }
 
 function subtract(a,b){
@@ -40,6 +38,27 @@ function point() {
     }
 }
 
+// FORMAT BUTTONS
+
+function plusMinus(number){
+    /*
+        Change current number in display to positive or negative number 
+    */
+    if (number > 0){
+        number = Number("-" + String(number));
+    } else {
+        number = number * -1;
+    }
+
+    clearDisplay();
+    addToDisplay(number);
+
+    // Update ops
+    if (op1 != undefined){
+        op1 = getDisplayText();
+    } 
+}
+
 // EXECUTING OPERATION
 function isValidOps(){
     let result = op1 != undefined && op2 != undefined && operator != undefined;
@@ -57,8 +76,11 @@ function simplifyAnswer(answer){
     /*
         Simplifies floating point numbers to be max length 16
     */
-
-    return Number(answer).toPrecision(16);
+    if (!Number.isInteger(answer)){
+        return Number(answer).toPrecision(15);
+    } else {
+        return answer;
+    }
 }
 
 function operate(a,b,operation){
@@ -145,6 +167,7 @@ function assignOperand(number){
     } 
 
     console.log("= Assign Operand =");
+    console.log(`Number: ${number}`);
     logOps();
 }
 
@@ -173,6 +196,31 @@ function assignOperator(oper){
 
 
 function main(){
+
+    // Format Event Listeners
+    let plus_minus = document.querySelector(".plusMinus");
+    plus_minus.addEventListener("click", () => {
+        let displayText = getDisplayText();
+
+        if (displayText == "0"){
+            clearDisplay();    
+            addToDisplay("-");
+        } else if (displayText == "-"){
+            clearDisplay();
+            addToDisplay("0");
+        } else {
+            plusMinus(Number(getDisplayText()));
+        }
+
+    });
+    
+    let percent = document.querySelector(".percent");
+    percent.addEventListener("click", () => {
+        let number = Number(getDisplayText());
+        number = number * .01;
+        clearDisplay();
+        addToDisplay(number);
+    });
     
     // Clear button event listener
     let clear_button = document.querySelector(".clear");
@@ -186,24 +234,22 @@ function main(){
     let number_buttons = document.querySelectorAll(".number");
     [...number_buttons].map((btn_element) => {
         btn_element.addEventListener("click", (event)=>{
+            let number = event.target.innerText;
 
+            // If inputting second operand, clear display first
             if (input_second){
                 clearDisplay();
                 input_second = false;
-                // logOps();
             }
 
             // If length of display text == 16 don't display
             if (getDisplayText().length != 16){
-                // If inputting second operand, clear display first
                 
-
                 if (getDisplayText() == "0"){
                     clearDisplay();
                 }
 
-                addToDisplay(event.target.innerText);
-                // logOps();
+                addToDisplay(number);
             }
 
         });
@@ -216,21 +262,19 @@ function main(){
             
             if (op1 == undefined){
                 assignOperand(Number(getDisplayText()));   
-                // logOps(); 
+            } else if (input_second){
+                //
+                console.log("=============");
             } else if (op1 != undefined && operator != undefined){
                 assignOperand(Number(getDisplayText()));
-                // logOps();
             }
 
             // Check for valid ops before assigning new operator
             if (isValidOps()){
                 operate(op1, op2, operator);
-                // logOps();
             }
 
             assignOperator(event.target.innerText);
-
-            // logOps();
         })
     });
 
